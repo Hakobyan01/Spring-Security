@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Spring Security Example </title>
+</head>
+<body>
+    <h1>Edit User: <span th:text="${user.getUsername()}"></span></h1>
+    <h3><a href="hello">Hello page</a></h3>
+
+    <form th:action="@{/users/edit-user}" method="post">
+        <div><label> User Id   : <input type="text" name="userid"/></label></div>
+        <div><label> Username  : <input type="text" name="username"/></label></div>
+        <div th:each="role : ${roles}">
+            <label>
+                <span th:text="${role.name()}"></span>: <input type="checkbox" th:name="${role.name()}">
+            </label>
+        </div>
+        <br>
+        <button type="submit">Save Changes</button>
+    </form>
+</body>
+</html>

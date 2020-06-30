@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Spring Security Example </title>
+</head>
+<body>
+    <h3><a href="hello">hello page</a></h3>
+    <h1>Add Message</h1>
+    <form th:action="@{/save-message}" method="post">
+        <label for="message"> Your Message: </label>
+        <input type="text" id="message" name="message"/>
+        <input type="submit" value="Submit"/>
+    </form>
+    <h1>Delete Message</h1>
+    <form th:action="@{/delete-message}" method="post">
+        <label for="id"> Message Id: </label>
+        <input type="text" id="id" name="id"/>
+        <input type="submit" value="Submit"/>
+    </form>
+    <br>
+    <hr>
+    <div>
+        <ul th:each="continet : ${messages}">
+            <li th:text="'*Id: ' + ${continet.getId()} +
+                         ' *Username: '+ ${continet.getMessage()} +
+                         ' *Author: ' + ${continet.getAuther().getUsername()}">
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
