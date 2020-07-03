@@ -1,5 +1,7 @@
 package com.example.sweater.domain;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import javax.persistence.*;
 
 @Entity
@@ -16,6 +18,9 @@ public class Message {
     @JoinColumn(name = "user_id")
     private User auther;
 
+    @Column(name = "filename")
+    private String fileName;
+
     public Message() {
     }
 
@@ -26,6 +31,12 @@ public class Message {
     public Message(String message, User auther) {
         this.message = message;
         this.auther = auther;
+    }
+
+    public Message(String message, User auther, String fileName) {
+        this.message = message;
+        this.auther = auther;
+        this.fileName = fileName;
     }
 
     public Long getId() {
@@ -52,12 +63,21 @@ public class Message {
         this.auther = auther;
     }
 
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
     @Override
     public String toString() {
         return "Message{" +
                 "id=" + id +
                 ", message='" + message + '\'' +
                 ", auther=" + auther +
+                ", fileName='" + fileName + '\'' +
                 '}';
     }
 }

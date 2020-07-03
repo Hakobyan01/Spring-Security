@@ -3,22 +3,37 @@
       xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>Spring Security Example </title>
+    <div th:replace="parts/header :: hdr"></div>
 </head>
 <body>
-    <h1>Edit User: <span th:text="${user.getUsername()}"></span></h1>
-    <h3><a href="hello">Hello page</a></h3>
+    <div th:insert="parts/navbar :: nab"></div>
 
-    <form th:action="@{/users/edit-user}" method="post">
-        <div><label> User Id   : <input type="text" name="userid"/></label></div>
-        <div><label> Username  : <input type="text" name="username"/></label></div>
-        <div th:each="role : ${roles}">
-            <label>
-                <span th:text="${role.name()}"></span>: <input type="checkbox" th:name="${role.name()}">
-            </label>
-        </div>
-        <br>
-        <button type="submit">Save Changes</button>
-    </form>
+    <div class="container mt-5">
+        <h1>Edit User: <span th:text="${user.getUsername()}"></span></h1>
+
+        <form th:action="@{/users/edit-user}" method="post">
+            <div class="form-group row col-sm-5">
+                <label for="userid">User Id:</label>
+                <input class="form-control" type="text" name="userid" id="userid"/>
+            </div>
+            <div class="form-group row col-sm-5">
+                <label for="username">Username: </label>
+                <input class="form-control" type="text" name="username" id="username"/>
+            </div>
+            <div class="form-group row col-sm-5">
+                <label for="password">Username: </label>
+                <input class="form-control" type="text" name="password" id="password"/>
+            </div>
+            <div class="form-group" th:each="role : ${roles}">
+                <label>
+                    <span th:text="${role.name()}"></span>
+                    <input type="checkbox" th:name="${role.name()}">
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </form>
+    </div>
+
+    <div th:insert="parts/footer :: foot"></div>
 </body>
 </html>

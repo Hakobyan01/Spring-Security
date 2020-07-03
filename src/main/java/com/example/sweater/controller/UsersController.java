@@ -23,25 +23,26 @@ public class UsersController {
     private UserRepository userRepository;
 
     @GetMapping
-    private String getUsersList(Model model){
+    public String getUsersList(Model model){
         model.addAttribute("users", userRepository.findAll());
         return "users";
     }
 
     @GetMapping("edit/{user}")
-    private String userEditForm(@PathVariable User user, Model model){
+    public String userEditForm(@PathVariable User user, Model model){
         model.addAttribute("user", user);
         model.addAttribute("roles", Role.values());
         return "user-edit";
     }
 
     @PostMapping("edit-user")
-    private String userChangesSave(@RequestParam("userid") User user,
+    public  String userChangesSave(@RequestParam("userid") User user,
                             @RequestParam String username,
+                            @RequestParam String password,
                             @RequestParam Map<String, String> form,
                             Model model){
-        user.setUsername(username);
-
+        user.setUsername(username==null ? user.getUsername() : username);
+        user.setPassword(password==null ? user.getPassword() : password);
         user.getRoles().clear();
 
         Set<String> roles = Arrays.stream(Role.values())

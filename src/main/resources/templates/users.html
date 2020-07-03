@@ -3,27 +3,30 @@
       xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>Spring Security Example </title>
+    <div th:replace="parts/header :: hdr"></div>
 </head>
 <body>
-    <h1>Users page</h1>
-    <h3><a href="hello">Hello page</a></h3>
-    <br>
-    <table>
-        <thead>
+    <div th:insert="parts/navbar :: nab"></div>
+
+    <div class="container">
+        <table>
+            <thead>
             <tr>
                 <th>User</th>
                 <th>Roles</th>
                 <th></th>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
             <tr th:each="user : ${users}">
                 <td><span th:text="${user.getUsername()}">User</span></td>
                 <td><span th:text="${user.getRoles()}">Roles</span></td>
                 <td><a th:href="'users/edit/'+${user.getId()}">edit</a></td>
             </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:insert="parts/footer :: foot"></div>
 </body>
 </html>
