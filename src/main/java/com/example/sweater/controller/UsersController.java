@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -41,8 +42,8 @@ public class UsersController {
                             @RequestParam String password,
                             @RequestParam Map<String, String> form,
                             Model model){
-        user.setUsername(username==null ? user.getUsername() : username);
-        user.setPassword(password==null ? user.getPassword() : password);
+        user.setUsername(StringUtils.isEmpty(username) ? user.getUsername() : username);
+        user.setPassword(StringUtils.isEmpty(password) ? user.getPassword() : password);
         user.getRoles().clear();
 
         Set<String> roles = Arrays.stream(Role.values())

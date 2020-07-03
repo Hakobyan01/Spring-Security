@@ -12,16 +12,14 @@
         <h1>Edit User: <span th:text="${user.getUsername()}"></span></h1>
 
         <form th:action="@{/users/edit-user}" method="post">
-            <div class="form-group row col-sm-5">
-                <label for="userid">User Id:</label>
-                <input class="form-control" type="text" name="userid" id="userid"/>
-            </div>
+            <input type="hidden" name="userid" id="userid" th:value="${user.getId()}" />
+
             <div class="form-group row col-sm-5">
                 <label for="username">Username: </label>
                 <input class="form-control" type="text" name="username" id="username"/>
             </div>
             <div class="form-group row col-sm-5">
-                <label for="password">Username: </label>
+                <label for="password">Password: </label>
                 <input class="form-control" type="text" name="password" id="password"/>
             </div>
             <div class="form-group" th:each="role : ${roles}">
