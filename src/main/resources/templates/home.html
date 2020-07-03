@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <div th:replace="parts/header :: hdr"></div>
 </head>
 <body>
     <div th:insert="parts/navbar :: nab"></div>
 
-    <div sec:authorize="hasAnyRole('ADMIN')" class="container mt-3">
+    <div class="container mt-3">
         <h2>Hello User</h2>
         <h5>This is my website</h5>
     </div>

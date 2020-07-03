@@ -16,4 +16,10 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username);
     }
+
+//    private static Collection<? extends GrantedAuthority> getAuthorities(User user){
+//        String [] userRoles = user.getRoles().stream().map(role -> role.getAuthority()).toArray(String[]::new);
+//        Collection<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(userRoles);
+//        return authorities;
+//    }
 }
