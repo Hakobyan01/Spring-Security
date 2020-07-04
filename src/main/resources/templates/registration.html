@@ -13,10 +13,15 @@
     <form th:action="@{/saveUser}" method="post">
         <div class="form-group row col-sm-5">
             <label for="username">Username:</label>
+            <p th:if="${message != null}" style="color: red" th:text="${message}"></p>
             <input type="text" class="form-control" id="username" name="username">
         </div>
         <div class="form-group row col-sm-5">
-            <label for="password">Password</label>
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="email" name="email">
+        </div>
+        <div class="form-group row col-sm-5">
+            <label for="password">Password: </label>
             <input type="password" class="form-control" id="password" name="password">
         </div>
         <button type="submit" class="btn btn-primary">Sing Up</button>

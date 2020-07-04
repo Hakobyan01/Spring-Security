@@ -11,6 +11,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -58,5 +59,9 @@ public class UsersController {
 
         userRepository.save(user);
         return "redirect:/users";
+    }
+
+    public static void main(String[] args) {
+        
     }
 }
