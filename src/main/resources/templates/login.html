@@ -8,15 +8,16 @@
 <div th:insert="parts/navbar :: nab"></div>
 
 <div class="container mt-5">
-    <h2>Log In</h2>
-    <br>
-    <div th:if="${param.error}">
+    <div class="alert alert-danger" role="alert" th:if="${param.error}">
         Invalid username and password.
     </div>
-    <div th:if="${param.logout}">
+    <div class="alert alert-primary" role="alert" th:if="${param.logout}">
         You have been logged out.
     </div>
     <p th:if="${message != null}" th:text="${message}"></p>
+
+    <h2>Log In</h2>
+    <br>
     <form th:action="@{/login}" method="post">
         <div class="form-group row col-sm-5">
             <label for="username">Username:</label>

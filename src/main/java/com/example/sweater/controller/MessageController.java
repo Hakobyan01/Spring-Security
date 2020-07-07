@@ -8,16 +8,18 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Controller
 public class MessageController {
@@ -28,32 +30,41 @@ public class MessageController {
     public String uploadPath;
 
     @GetMapping("/message-page")
-    public String getRegisert(@AuthenticationPrincipal User user, Model model){
+    public String getRegisert(@AuthenticationPrincipal User user,
+                              Message message,
+                              Model model){
         model.addAttribute("messages", messageRepository.findAll());
 
-        return "message-page";
+        return "/message-page";
     }
 
     @PostMapping(value = "/save-message")
-    private String saveMessage(@RequestParam String message,
-                               @AuthenticationPrincipal User user,
+    private String saveMessage(@AuthenticationPrincipal User user,
+                               @Valid Message message,
+                               BindingResult bindingResult,
+                               Model model,
                                @RequestParam("file") MultipartFile file) throws IOException {
-        Message msg = new Message(message, user);
+        message.setAuthor(user);
+        if (bindingResult.hasErrors()){
+            Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
+            model.addAttribute("messages", messageRepository.findAll());
+            model.mergeAttributes(errorsMap);
+            return "/message-page";
+        }else {
+            if (file != null && !file.getOriginalFilename().isEmpty()) {
+                File uploadDir = new File(uploadPath);
+                if (!uploadDir.exists()) {
+                    uploadDir.mkdir();
+                }
 
-        if(file != null && !file.getOriginalFilename().isEmpty()){
-            File uploadDir = new File(uploadPath);
-            if(!uploadDir.exists()){
-                uploadDir.mkdir();
+                String uuidFile = UUID.randomUUID().toString();
+                String resultFileName = uuidFile + "." + file.getOriginalFilename();
+                file.transferTo(new File(uploadPath + "/" + resultFileName));
+
+                message.setFileName(resultFileName);
             }
-
-            String uuidFile = UUID.randomUUID().toString();
-            String resultFileName = uuidFile + "." + file.getOriginalFilename();
-            file.transferTo(new File(uploadPath + "/" + resultFileName));
-
-            msg.setFileName(resultFileName);
+            messageRepository.save(message);
         }
-
-        messageRepository.save(msg);
         return "redirect:/message-page";
     }
 

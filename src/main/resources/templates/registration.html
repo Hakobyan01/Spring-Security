@@ -10,19 +10,45 @@
 <div class="container mt-5">
     <H2>Registration</H2>
     <br>
-    <form th:action="@{/saveUser}" method="post">
-        <div class="form-group row col-sm-5">
-            <label for="username">Username:</label>
-            <p th:if="${message != null}" style="color: red" th:text="${message}"></p>
-            <input type="text" class="form-control" id="username" name="username">
+    <form th:action="@{/registration}" method="post">
+        <div class="form-group row">
+            <label for="username" class="col-sm-2 col-form-label">Username:</label>
+            <div class="col-sm-6">
+                <input type="text" th:class="'form-control'+${usernameError != null || userExistsError != null ? ' is-invalid' : ''}" id="username" name="username" placeholder="Username">
+                <div th:if="${usernameError}" class="invalid-feedback">
+                    <p th:if="${usernameError}" th:text="${usernameError}"></p>
+                </div>
+                <div th:if="${userExistsError}" class="invalid-feedback">
+                    <p th:if="${userExistsError}" th:text="${userExistsError}"></p>
+                </div>
+            </div>
         </div>
-        <div class="form-group row col-sm-5">
-            <label for="email">Email:</label>
-            <input type="email" class="form-control" id="email" name="email">
+        <div class="form-group row">
+            <label for="password" class="col-sm-2 col-form-label">Password:</label>
+            <div class="col-sm-6">
+                <input type="password" th:class="'form-control' + ${passwordError != null ? ' is-invalid' : ''}" id="password" name="password" placeholder="Password">
+                <div th:if="${passwordError}" class="invalid-feedback">
+                    <p th:if="${passwordError}" th:text="${passwordError}"></p>
+                </div>
+            </div>
         </div>
-        <div class="form-group row col-sm-5">
-            <label for="password">Password: </label>
-            <input type="password" class="form-control" id="password" name="password">
+        <div class="form-group row">
+            <label for="confirmPassword" class="col-sm-2 col-form-label">Confirm password:</label>
+            <div class="col-sm-6">
+                <input type="password" th:class="form-control + ${confirmPasswordError != null ? ' is-invalid' : ''}" id="confirmPassword" name="confirmPassword" placeholder="Confirm password">
+                <div th:if="${confirmPasswordError}" class="invalid-feedback">
+                    <p th:if="${confirmPasswordError}" th:text="${confirmPasswordError}"></p>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="email" class="col-sm-2 col-form-label">Email:</label>
+            <div class="col-sm-6">
+                <input type="email" th:class="'form-control' + ${passwordError != null ? ' is-invalid' : ''}" id="email" name="email" placeholder="some@some.com">
+                <div th:if="${emailError}" class="invalid-feedback">
+                    <p th:if="${emailError}" th:text="${emailError}"></p>
+                </div>
+            </div>
         </div>
         <button type="submit" class="btn btn-primary">Sing Up</button>
     </form>

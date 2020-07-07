@@ -63,6 +63,7 @@ public class UserService implements UserDetailsService {
         }
 
         user.setActivationCode(null);
+        user.setConfirmPassword(user.getPassword());
         userRepository.save(user);
 
         return true;

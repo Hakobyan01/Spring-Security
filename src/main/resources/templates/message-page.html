@@ -12,11 +12,14 @@
         <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseAddMessage" aria-expanded="false" aria-controls="collapseExample">
             Add Message
         </button>
-        <div class="collapse" id="collapseAddMessage">
+        <div th:class="collapse+${textError != null ? ' show' : ''}" id="collapseAddMessage">
             <form th:action="@{/save-message}" method="post" enctype="multipart/form-data">
                 <div class="form-group row col-sm-5">
-                    <label for="message">Your Message:</label>
-                    <input type="text" class="form-control" id="message" name="message">
+                    <label for="text">Your Message:</label>
+                    <input type="text" th:class="form-control+${textError != null ? ' is-invalid' : ''}" id="text" name="text">
+                    <div th:if="${textError}" class="invalid-feedback">
+                        <p th:if="${textError}" th:text="${textError}"></p>
+                    </div>
                 </div>
                 <div class="form-group row col-sm-5">
                     <input type="file" name="file">
@@ -30,8 +33,8 @@
             <div th:each="msg : ${messages}" class="card" style="width: 18rem;">
                 <img th:if="${msg.getFileName() != null}" th:src="@{'/image/'+${msg.getFileName()}}" class="card-img-top">
                 <div class="card-body">
-                    <h5 class="card-title" th:text="${msg.getAuther().getUsername()}"></h5>
-                    <p class="card-text" th:text="${msg.getMessage()}"></p>
+                    <h5 class="card-title" th:text="${msg.getAuthor().getUsername()}"></h5>
+                    <p class="card-text" th:text="${msg.getText()}"></p>
                     <a th:href="'/delete-message/'+${msg.getId()}" class="btn btn-primary">Delete</a>
                 </div>
             </div>

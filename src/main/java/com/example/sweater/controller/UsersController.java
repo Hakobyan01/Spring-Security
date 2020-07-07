@@ -5,13 +5,13 @@ import com.example.sweater.domain.User;
 import com.example.sweater.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -23,6 +23,9 @@ import java.util.stream.Collectors;
 public class UsersController {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping
     public String getUsersList(Model model){
@@ -44,7 +47,7 @@ public class UsersController {
                             @RequestParam Map<String, String> form,
                             Model model){
         user.setUsername(StringUtils.isEmpty(username) ? user.getUsername() : username);
-        user.setPassword(StringUtils.isEmpty(password) ? user.getPassword() : password);
+        user.setPassword(StringUtils.isEmpty(password) ? user.getPassword() : passwordEncoder.encode(password));
         user.getRoles().clear();
 
         Set<String> roles = Arrays.stream(Role.values())

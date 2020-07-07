@@ -1,8 +1,10 @@
 package com.example.sweater.domain;
 
+import org.hibernate.validator.constraints.Length;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "message")
@@ -11,12 +13,14 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "message")
-    private String message;
+    @Column(name = "text")
+    @NotBlank(message = "Please fill the message")
+    @Length(max = 2048, message = "Message to long (more then 2kb)")
+    private String text;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User auther;
+    private User author;
 
     @Column(name = "filename")
     private String fileName;
@@ -24,18 +28,18 @@ public class Message {
     public Message() {
     }
 
-    public Message(String message) {
-        this.message = message;
+    public Message(String text) {
+        this.text = text;
     }
 
-    public Message(String message, User auther) {
-        this.message = message;
-        this.auther = auther;
+    public Message(String text, User auther) {
+        this.text = text;
+        this.author = auther;
     }
 
-    public Message(String message, User auther, String fileName) {
-        this.message = message;
-        this.auther = auther;
+    public Message(String text, User auther, String fileName) {
+        this.text = text;
+        this.author = auther;
         this.fileName = fileName;
     }
 
@@ -47,20 +51,20 @@ public class Message {
         this.id = id;
     }
 
-    public String getMessage() {
-        return message;
+    public String getText() {
+        return text;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setText(String text) {
+        this.text = text;
     }
 
-    public User getAuther() {
-        return auther;
+    public User getAuthor() {
+        return author;
     }
 
-    public void setAuther(User auther) {
-        this.auther = auther;
+    public void setAuthor(User author) {
+        this.author = author;
     }
 
     public String getFileName() {
@@ -75,8 +79,8 @@ public class Message {
     public String toString() {
         return "Message{" +
                 "id=" + id +
-                ", message='" + message + '\'' +
-                ", auther=" + auther +
+                ", message='" + text + '\'' +
+                ", auther=" + author +
                 ", fileName='" + fileName + '\'' +
                 '}';
     }
