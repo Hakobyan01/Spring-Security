@@ -21,29 +21,25 @@ public class RegistrationController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     @GetMapping("/registration")
     public String getRegistration(){
         return "/registration";
     }
 
     @PostMapping(value = "/registration")
-    public String addUser(@Valid User user,
+    public String addUser(@RequestParam String confirmPassword,
+                          @Valid User user,
                           BindingResult bindingResult,
                           Model model){
-        if (bindingResult.hasErrors()){
-            Map<String, String> errors = ControllerUtils.getErrors(bindingResult);
+        Map<String, String> errors = ControllerUtils.getErrors(bindingResult);
+        model.mergeAttributes(errors);
+        if (!user.getPassword().equals(confirmPassword)){
+            errors.put("confirmPasswordError", "Passwords are different!");
+        }
+        if (!errors.isEmpty()){
             model.mergeAttributes(errors);
-            model.addAttribute("user", user);
             return "/registration";
         }else {
-            if (!user.getPassword().equals(user.getConfirmPassword())){
-                model.addAttribute("passwordError", "Passwords are different!");
-                model.addAttribute("user", user);
-                return "/registration";
-            }
             if (!userService.addUser(user)) {
                 model.addAttribute("userExistsError", "user exists!");
                 return "/registration";

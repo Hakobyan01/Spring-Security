@@ -44,7 +44,7 @@
         <div class="form-group row">
             <label for="email" class="col-sm-2 col-form-label">Email:</label>
             <div class="col-sm-6">
-                <input type="email" th:class="'form-control' + ${passwordError != null ? ' is-invalid' : ''}" id="email" name="email" placeholder="some@some.com">
+                <input type="email" th:class="'form-control' + ${emailError != null ? ' is-invalid' : ''}" id="email" name="email" placeholder="some@some.com">
                 <div th:if="${emailError}" class="invalid-feedback">
                     <p th:if="${emailError}" th:text="${emailError}"></p>
                 </div>

@@ -20,9 +20,6 @@ public class User implements UserDetails {
     private String username;
     @NotBlank(message = "Password cant be empty")
     private String password;
-    @Transient
-    @NotBlank(message = "Password confirmation cant be empty")
-    private String confirmPassword;
 
     private boolean active;
 
@@ -136,14 +133,6 @@ public class User implements UserDetails {
 
     public void setActivationCode(String activationCode) {
         this.activationCode = activationCode;
-    }
-
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
     }
 
     @Override
