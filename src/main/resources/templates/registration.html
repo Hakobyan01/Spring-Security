@@ -50,6 +50,12 @@
                 </div>
             </div>
         </div>
+        <div>
+            <div class="g-recaptcha" data-sitekey="6LdED68ZAAAAAHIb4DPsVC2LcseNkvqyipEoaTTW"></div>
+            <div class="alert alert-danger" role="alert" th:if="${captchaError != null}">
+                <span th:text="${captchaError}"></span>
+            </div>
+        </div>
         <button type="submit" class="btn btn-primary">Sing Up</button>
     </form>
 </div>

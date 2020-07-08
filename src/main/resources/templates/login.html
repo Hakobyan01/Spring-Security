@@ -17,7 +17,9 @@
     <div class="alert alert-warning alert-dismissible fade show" role="alert" th:if="${infoMessage != null}">
         <strong th:text="${infoMessage}"></strong>
     </div>
-    <p th:if="${message != null}" th:text="${message}"></p>
+    <div th:if="${message != null}" th:class="'alert alert-'+${messageType}" role="alert">
+        <span th:text="${message}"></span>
+    </div>
 
     <h2>Log In</h2>
     <br>
