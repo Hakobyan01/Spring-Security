@@ -32,7 +32,7 @@ public class RegistrationController {
     @Autowired
     public RestTemplate restTemplate;
 
-    private static final String CAPTHCA_URL = "https://www.google.com/recaptcha/api/siteverify?secter=%s&response";
+    private static final String CAPTHCA_URL = "https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s";
 
     @GetMapping("/registration")
     public String getRegistration(){
